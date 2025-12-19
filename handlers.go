@@ -100,7 +100,7 @@ func LongToShortHandler() gin.HandlerFunc {
 			return
 		}
 
-		shortURL := proto + "://" + domain + "/" +publicPath + options.ShortKey
+		shortURL := proto + "://" + domain  +publicPath + options.ShortKey
 
 		// 兼容以前的返回结构体
 		respDataLegacy := gin.H{
