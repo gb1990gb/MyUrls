@@ -110,9 +110,9 @@ func run() {
 			"publicPath": publicPath, // 将变量传给模板
 		})
 	})
-	// 访问 http://.../myurls/index.js 或 logo.png 会进入这里
-    // 它会将请求映射到磁盘上的 public/index.js 或 public/logo.png
-    router.Static(publicPath, "./public")
+	// 2. 静态资源加上 /res 后缀
+	// 访问路径变为: /myurls/res/index.js
+	router.Static(publicPath+"res", "./public")
 
 	router.POST(publicPath+"short", LongToShortHandler())
 	router.GET(publicPath+":shortKey", ShortToLongHandler())
