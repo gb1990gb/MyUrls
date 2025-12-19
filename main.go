@@ -112,7 +112,7 @@ func run() {
 	})
 	// 2. 静态资源加上 /res 后缀
 	// 访问路径变为: /myurls/res/index.js
-	router.Static(publicPath+"res", "./public")
+	router.Static(publicPath+"res", "./public/res")
 
 	router.POST(publicPath+"short", LongToShortHandler())
 	router.GET(publicPath+":shortKey", ShortToLongHandler())
