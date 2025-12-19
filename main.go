@@ -15,6 +15,7 @@ var helpFlag bool
 
 var (
 	port          = "8080"
+	publicPath    = "/"
 	domain        = "localhost:8080"
 	proto         = "https"
 	redisAddr     = "localhost:6379"
@@ -75,6 +76,9 @@ func parseEnvirons() {
 	if d := os.Getenv("MYURLS_DOMAIN"); d != "" {
 		domain = d
 	}
+	if d := os.Getenv("MYURLS_PUBLIC_PATH"); d != "" {
+		publicPath = d
+	}
 	if p := os.Getenv("MYURLS_PROTO"); p != "" {
 		proto = p
 	}
@@ -95,17 +99,17 @@ func run() {
 	router.Use(initServiceLogger())
 
 	// static files
-	router.LoadHTMLGlob("public/*.html")
-	router.StaticFile("/logo.png", "public/logo.png")
+	router.LoadHTMLGlob(publicPath+"public/*.html")
+	router.StaticFile(publicPath+"logo.png", "public/logo.png")
 
-	router.GET("/", func(context *gin.Context) {
+	router.GET(publicPath, func(context *gin.Context) {
 		context.HTML(http.StatusOK, "index.html", gin.H{
 			"title": "MyUrls",
 		})
 	})
 
-	router.POST("/short", LongToShortHandler())
-	router.GET("/:shortKey", ShortToLongHandler())
+	router.POST(publicPath+"short", LongToShortHandler())
+	router.GET(publicPath+":shortKey", ShortToLongHandler())
 
 	logger.Infof("server running on :%s", port)
 	router.Run(fmt.Sprintf(":%s", port))

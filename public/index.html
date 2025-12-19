@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MyUrls</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
-  <script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
-  <script src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
-  <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <script src="vue.min.js"></script>
+  <script src="axios.min.js"></script>
+  <script src="index.js"></script>
+  <script src="vue-clipboard.min.js"></script>
 </head>
 
 <body>
@@ -71,7 +71,7 @@
           let data = new FormData();
           data.append("longUrl", btoa(this.longUrl));
           data.append("shortKey", this.shortUrl.indexOf('http') < 0 ? this.shortUrl : '');
-          axios.post('/short', data, {
+          axios.post('short', data, {
             header: {
               "Content-Type": "application/form-data; charset=utf-8"
             }
