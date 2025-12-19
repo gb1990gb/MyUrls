@@ -99,12 +99,13 @@ func run() {
 	router.Use(initServiceLogger())
 
 	// static files
-	router.LoadHTMLGlob(publicPath+"public/*.html")
+	router.LoadHTMLGlob("public/*.html")
 	router.StaticFile(publicPath+"logo.png", "public/logo.png")
 
 	router.GET(publicPath, func(context *gin.Context) {
 		context.HTML(http.StatusOK, "index.html", gin.H{
 			"title": "MyUrls",
+			"publicPath": publicPath, // 将变量传给模板
 		})
 	})
 

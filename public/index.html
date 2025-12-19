@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MyUrls</title>
-
+  <!-- .publicPath 就是 Go 传进来的变量 -->
+  <base href="{{.publicPath}}">
   <link rel="stylesheet" href="index.css">
   <script src="vue.min.js"></script>
   <script src="axios.min.js"></script>
@@ -33,6 +34,8 @@
   </div>
 
   <script>
+    // 定义全局基础路径
+    window.APP_BASE_PATH = "{{.publicPath}}";
     const repo = 'https://github.com/CareyWang/MyUrls'
 
     let app = new Vue({
@@ -71,7 +74,7 @@
           let data = new FormData();
           data.append("longUrl", btoa(this.longUrl));
           data.append("shortKey", this.shortUrl.indexOf('http') < 0 ? this.shortUrl : '');
-          axios.post('short', data, {
+          axios.post(window.APP_BASE_PATH + 'short', data, {
             header: {
               "Content-Type": "application/form-data; charset=utf-8"
             }
