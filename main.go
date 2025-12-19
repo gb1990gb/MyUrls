@@ -94,13 +94,15 @@ func run() {
 	// init and run server
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-
+	// 1. 确保 publicPath 以 / 结尾，方便路径拼接
+    if !strings.HasSuffix(publicPath, "/") {
+        publicPath += "/"
+    }
 	// logger
 	router.Use(initServiceLogger())
 
 	// static files
 	router.LoadHTMLGlob("public/*.html")
-	router.StaticFile(publicPath+"logo.png", "public/logo.png")
 
 	router.GET(publicPath, func(context *gin.Context) {
 		context.HTML(http.StatusOK, "index.html", gin.H{
@@ -108,6 +110,9 @@ func run() {
 			"publicPath": publicPath, // 将变量传给模板
 		})
 	})
+	// 访问 http://.../myurls/index.js 或 logo.png 会进入这里
+    // 它会将请求映射到磁盘上的 public/index.js 或 public/logo.png
+    router.Static(publicPath, "./public")
 
 	router.POST(publicPath+"short", LongToShortHandler())
 	router.GET(publicPath+":shortKey", ShortToLongHandler())
