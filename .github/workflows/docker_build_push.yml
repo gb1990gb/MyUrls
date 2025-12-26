@@ -2,8 +2,9 @@ name: Build and Push Multi-Arch Docker Image
 
 on:
   push:
-    branches:
-      - master
+    branches: [ "main" ]
+    # 只匹配以 v 开头的版本号 tag（语义化版本规范）
+    tags: [ 'v*' ]
 
 jobs:
   build-and-push:
