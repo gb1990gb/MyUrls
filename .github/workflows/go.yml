@@ -3,8 +3,8 @@ name: Github CI
 on:
   push:
     branches: [ "main" ]
-    # 新增 tag 触发条件
-    tags: [ '*' ]
+    # 只匹配以 v 开头的版本号 tag（语义化版本规范）
+    tags: [ 'v*' ]
 
 jobs:
   linux_amd64_build:
